@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>Color Game</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&display=swap" rel="stylesheet"> 
+    <link rel="stylesheet" href="./index.css" />
+  </head>
+  <body onload="newGame()">
+    <div id="header">
+      <h2>The Great</h2>
+      <h1 id="header-clue">rgb(xxx,xxx,xxx)</h1>
+      <h2>Guessing Game</h2>
+      <div id="count">
+        <h2>No. Of Tries : </h2><h2 id="tries">x</h2>
+      </div>
+      <div id="reload">
+      <button class="button" onClick="window.location.reload();">New Game</button>
+      </div>
+    </div>
+    <style>
+      h1{
+        font-family: 'Gloria Hallelujah', cursive;
+      }
+      h2{
+        font-family: 'Gloria Hallelujah', cursive;
+      }
+    </style>
+    <div id="container1">
+      <div class="tile" id="1"></div> 
+      <div class="tile" id="2"></div>
+      <div class="tile" id="3"></div>
+    </div>
+    <div id="container2">
+      <div class="tile" id="4"></div>
+      <div class="tile" id="5"></div>
+      <div class="tile" id="6"></div>
+    </div>
+    
+
+    <script>
+      let t = new Array();
+      for (let i =1;i<7;i++){
+        t[i-1] = document.getElementById(i)
+      }
+      var x;
+      var correctColor;
+
+      function getRandomColor() {
+        var letters = "0123456789ABCDEF";
+        var color = "#";
+        for (var i = 0; i < 6; i++) {
+          color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+      }
+
+      function newGame() {
+        for (let i=0;i<6;i++){
+          t[i].style.background = getRandomColor();
+        }
+        
+        x = Math.floor(Math.random() * 6 + 1);
+
+        for(var i=0;i<6;i++){
+          if(x==i+1)
+          correctColor = t[i].style.background;
+        }
+
+        /* console.log(x);
+        console.log(correctColor); */
+
+        document.getElementById("header-clue").innerHTML = correctColor;
+      }
+      document.getElementById("tries").innerHTML = 0;
+      c =0;
+      for(let i = 0;i<6;i++){
+        t[i].addEventListener("click", function(){
+          if (t[i].style.background == correctColor){
+            for (let j = 0;j<6;j++)
+            {
+              t[j].style.background = correctColor;
+            }
+            document.getElementById("header").style.background = correctColor;
+            document.getElementById("count").style.background = correctColor;
+            document.getElementById("reload").style.background= correctColor;
+            alert("Congratulations!!! YOU WON");
+          }
+          else{
+            t[i].style.background = "black";
+            document.getElementById("tries").innerHTML = ++c;
+          }
+        });
+      }
+
+      
+    </script>
+  </body>
+</html>
